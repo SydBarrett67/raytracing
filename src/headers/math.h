@@ -1,3 +1,5 @@
+#pragma once
+
 #include "vec3.h"
 #include "mat3.h"
 
@@ -9,12 +11,16 @@ public:
         return a.x * b.x + a.y * b.y + a.z * b.z;
     }
 
-    // Transforms a vector based on a 3x3 transformation matrix
-    inline static vec3 transform(const vec3& v, const mat3& m) {
-        return vec3(
-            m.data[0][0] * v.x + m.data[0][1] * v.y + m.data[0][2] * v.z,
-            m.data[1][0] * v.x + m.data[1][1] * v.y + m.data[1][2] * v.z,
-            m.data[2][0] * v.x + m.data[2][1] * v.y + m.data[2][2] * v.z
+    inline static mat3 getRotationMatrix(float yaw, float pitch) {
+        float cy = cos(yaw);
+        float sy = sin(yaw);
+        float cp = cos(pitch);
+        float sp = sin(pitch);
+
+        return mat3(
+            cy, sy * sp, sy * cp,
+            0,  cp,      -sp,
+            -sy, cy * sp, cy * cp
         );
     }
 };

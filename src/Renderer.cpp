@@ -11,7 +11,7 @@ SDL_Window* Renderer::createWindow() {
     // Window initialization
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window* window = SDL_CreateWindow(
-        "Lenia",
+        "Raytracer",
         this->width,
         this->height,
         0

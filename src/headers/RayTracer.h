@@ -1,3 +1,5 @@
+#pragma once
+
 #include "headers/vec3.h"
 #include "headers/Ray.h"
 

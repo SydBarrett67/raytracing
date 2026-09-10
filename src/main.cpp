@@ -5,12 +5,18 @@
 
 // Modules
 #include "headers/Renderer.h"
+#include "headers/Camera.h"
+#include "headers/math.h"
 
 #define width 480
 #define height 240
 
+#define MOUSE_SENSITIVITY 0.5f
+
 int main()
 {
+    Camera camera = Camera();
+
     // Raytracer construction
     RayTracer rt = RayTracer(width, height);
 
@@ -22,12 +28,28 @@ int main()
 
     // Main loop
     bool running = true;
-    while (running) {
 
+    mat3 transform_matrix;
+
+    while (running) {
         SDL_Event event;
 
         while (SDL_PollEvent(&event))
         {
+            if (event.type == SDL_EVENT_MOUSE_MOTION) {
+                float dx = event.motion.xrel;
+                float dy = event.motion.yrel;
+
+                transform_matrix = math::getRotationMatrix(
+                    dx * MOUSE_SENSITIVITY,
+                    dy * MOUSE_SENSITIVITY
+                );
+
+                std::cout << "Matrix: " << transform_matrix.print() << std::endl;
+
+                camera.update(transform_matrix);
+            }
+
             if (event.type == SDL_EVENT_QUIT)
                 running = false;
         }

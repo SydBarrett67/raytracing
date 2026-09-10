@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <string>
 
 class mat3 {
 public:
@@ -25,6 +26,16 @@ public:
         data[2][0] = a20;
         data[2][1] = a21;
         data[2][2] = a22;
+    }
+
+    std::string print() const { 
+        std::string result = "";
+
+        for (int i=0;i<3;i++) {
+            for (int j=0;j<3;j++) {
+                result += std::to_string(data[i][j]);
+            }
+        }
     }
 
     // Getter

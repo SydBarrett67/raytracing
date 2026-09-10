@@ -11,6 +11,7 @@ add_subdirectory(SDL EXCLUDE_FROM_ALL)
 add_executable(raytracing
     src/main.cpp
     src/Renderer.cpp
+    src/Camera.cpp
 )
 
 target_link_libraries(raytracing PRIVATE SDL3::SDL3)
