@@ -12,7 +12,7 @@
 int main()
 {
     // Raytracer construction
-    RayTracer rt = RayTracer();
+    RayTracer rt = RayTracer(width, height);
 
     // Renderer construction
     Renderer renderer = Renderer(width, height, rt);
