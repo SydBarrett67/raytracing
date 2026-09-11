@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "headers/RayTracer.h"
 #include "headers/Ray.h"
 
@@ -19,8 +21,16 @@ void RayTracer::trace() {
     }
 }
 
-vec3 RayTracer::trace_ray(Ray Ray) {
+vec3 RayTracer::trace_ray(Ray ray) {
 
-    
+    // Loop through every object in the scene and check intersection
+    /*
+    for (auto& obj : this->scene.objects) {
+        if (ray.intersects(obj)) {
+            std::cout << "Hit!" << std::endl;
+            return vec3(1.0f);
+        }
+    }*/
 
+    return vec3(0.0f);
 }

@@ -15,10 +15,17 @@
 
 int main()
 {
+    // Camera construction
     Camera camera = Camera();
 
+    // Scene construction
+    Scene scene = Scene({
+        // Spheres
+        Sphere(vec3(2.0f), 1.0f)
+    });
+
     // Raytracer construction
-    RayTracer rt = RayTracer(width, height);
+    RayTracer rt = RayTracer(width, height, camera);
 
     // Renderer construction
     Renderer renderer = Renderer(width, height, rt);
@@ -28,9 +35,7 @@ int main()
 
     // Main loop
     bool running = true;
-
     mat3 transform_matrix;
-
     while (running) {
         SDL_Event event;
 
