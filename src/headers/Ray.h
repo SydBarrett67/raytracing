@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vec3.h"
+#include "headers/Sphere.h"
 
 class Ray {
 private:
@@ -11,6 +12,6 @@ public:
     // Consutrctor
     Ray(vec3 origin, vec3 dir) : origin(origin), dir(dir) {};
 
-    
+    bool intersects(Sphere obj);
 
 };

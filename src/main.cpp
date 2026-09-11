@@ -45,7 +45,7 @@ int main()
                     dy * MOUSE_SENSITIVITY
                 );
 
-                std::cout << "Matrix: " << transform_matrix.print() << std::endl;
+                //std::cout << "Matrix: " << transform_matrix.print() << std::endl;
 
                 camera.update(transform_matrix);
             }

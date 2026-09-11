@@ -10,8 +10,8 @@ public:
     float x, y, z;
 
     // Constructor
-    vec3(float x, float y, float z) { x = x; y = y; z = z; }
-    vec3(float x)                   { x = x; y = x; z = x; }
+    vec3(float x, float y, float z) : x(x), y(y), z(z) {};
+    vec3(float x)                   : x(x), y(x), z(x) {};
 
     void normalize() {
 
@@ -33,6 +33,15 @@ public:
             m.data[0][0] * this->x + m.data[0][1] * this->y + m.data[0][2] * this->z,
             m.data[1][0] * this->x + m.data[1][1] * this->y + m.data[1][2] * this->z,
             m.data[2][0] * this->x + m.data[2][1] * this->y + m.data[2][2] * this->z
+        );
+    }
+
+    vec3 operator-(const vec3& other) const
+    {
+        return vec3(
+            x - other.x,
+            y - other.y,
+            z - other.z
         );
     }
 };

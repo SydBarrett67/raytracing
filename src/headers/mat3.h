@@ -28,12 +28,13 @@ public:
         data[2][2] = a22;
     }
 
+    // Printout
     std::string print() const { 
         std::string result = "";
 
         for (int i=0;i<3;i++) {
             for (int j=0;j<3;j++) {
-                result += std::to_string(data[i][j]);
+                result += std::to_string(data[i][j]) + " ";
             }
         }
     }
