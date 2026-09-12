@@ -20,7 +20,7 @@ private:
     std::vector<vec3> pixels;
 
     // Camera
-    Camera cam;
+    Camera* cam;
 
     // Scene
     Scene scene;
@@ -30,7 +30,7 @@ private:
     size_t bounces;
 
 public:
-    RayTracer(size_t width, size_t height, Camera cam, Scene scene = Scene(), size_t rays_per_pixel=1, size_t bounces=2)
+    RayTracer(size_t width, size_t height, Camera* cam, Scene scene = Scene(), size_t rays_per_pixel=1, size_t bounces=2)
     : width(width), height(height),
     cam(cam),
     pixels(width * height, vec3(0.0f)),

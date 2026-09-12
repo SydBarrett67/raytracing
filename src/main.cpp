@@ -11,7 +11,7 @@
 #define width 480
 #define height 240
 
-#define MOUSE_SENSITIVITY 0.1f
+#define MOUSE_SENSITIVITY 0.01f
 
 int main()
 {
@@ -25,7 +25,7 @@ int main()
     });
 
     // Raytracer construction
-    RayTracer rt = RayTracer(width, height, camera, scene);
+    RayTracer rt = RayTracer(width, height, &camera, scene);
 
     // Renderer construction
     Renderer renderer = Renderer(width, height, rt);
@@ -51,10 +51,6 @@ int main()
                     dx * MOUSE_SENSITIVITY,
                     dy * MOUSE_SENSITIVITY
                 );
-
-                //std::cout << "Matrix: " << transform_matrix.print() << std::endl;
-
-                //std::cout << "Camera " << camera.orientation.print() << std::endl;
 
                 camera.update(transform_matrix);
             }

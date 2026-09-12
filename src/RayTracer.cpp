@@ -7,7 +7,8 @@
 #include "headers/mat3.h"
 
 void RayTracer::trace() {
-    if (this->frame > 0) return;
+    //if (this->frame > 0) return;
+
     // Loop over every pixel
     for (int i=0;i<height;i++) {
         for (int j=0;j<width;j++) {
@@ -16,7 +17,7 @@ void RayTracer::trace() {
             this->pixels.at(i * width + j) = this->trace_ray(
                 // Init ray from camera position and orientation
                 Ray(
-                    this->cam.position,
+                    this->cam->orientation,
                     this->getRayDirection(j, i)
                 )
             );
@@ -29,7 +30,6 @@ void RayTracer::trace() {
 vec3 RayTracer::trace_ray(Ray ray) {
 
     // Loop through every object in the scene and check intersection
-    /*
     for (auto& obj : this->scene.objects) {
         if (ray.intersects(obj)) {
             std::cout << "Hit!" << std::endl;
@@ -37,10 +37,9 @@ vec3 RayTracer::trace_ray(Ray ray) {
         }
     }
 
-    return vec3(0.0f);
-    */
-
     return ray.dir;
+
+    //return ray.dir;
 }
 
 std::vector<uint8_t> RayTracer::getPixels()
@@ -61,6 +60,7 @@ std::vector<uint8_t> RayTracer::getPixels()
 
     return bytes;
 }
+
 vec3 RayTracer::getRayDirection(int x, int y)
 {
     float aspect_ratio = (float)width / height;
@@ -73,21 +73,17 @@ vec3 RayTracer::getRayDirection(int x, int y)
 
     vec3 world_up(0.0f, 1.0f, 0.0f);
 
-    // 1. Forward deve essere normalizzato
-    vec3 forward = this->cam.orientation;
+    vec3 forward = this->cam->orientation;
     forward.normalize();
 
-    // 2. Right è il prodotto vettoriale tra forward e world_up
     vec3 right = math::cross(forward, world_up);
     right.normalize();
 
-    // 3. Up reale della camera è il prodotto vettoriale tra right e forward
     vec3 up = math::cross(forward, right);
     up.normalize();
 
-    vec3 ray_dir_world = (right * px) + (up * py) + (forward * 1.0f); // Se forward guarda avanti (+Z)
+    vec3 ray_dir_world = (right * px) + (up * py) + (forward * 1.0f);
     ray_dir_world.normalize();
 
     return ray_dir_world;
-
 }
