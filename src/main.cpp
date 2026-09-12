@@ -11,7 +11,7 @@
 #define width 480
 #define height 240
 
-#define MOUSE_SENSITIVITY 0.5f
+#define MOUSE_SENSITIVITY 0.1f
 
 int main()
 {
@@ -25,7 +25,7 @@ int main()
     });
 
     // Raytracer construction
-    RayTracer rt = RayTracer(width, height, camera);
+    RayTracer rt = RayTracer(width, height, camera, scene);
 
     // Renderer construction
     Renderer renderer = Renderer(width, height, rt);
@@ -36,11 +36,13 @@ int main()
     // Main loop
     bool running = true;
     mat3 transform_matrix;
-    while (running) {
-        SDL_Event event;
 
+    while (running) {
+        // Event loop
+        SDL_Event event;
         while (SDL_PollEvent(&event))
         {
+            // Mouse movement
             if (event.type == SDL_EVENT_MOUSE_MOTION) {
                 float dx = event.motion.xrel;
                 float dy = event.motion.yrel;
@@ -52,9 +54,12 @@ int main()
 
                 //std::cout << "Matrix: " << transform_matrix.print() << std::endl;
 
+                //std::cout << "Camera " << camera.orientation.print() << std::endl;
+
                 camera.update(transform_matrix);
             }
 
+            // Quit event
             if (event.type == SDL_EVENT_QUIT)
                 running = false;
         }

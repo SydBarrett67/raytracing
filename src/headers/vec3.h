@@ -36,6 +36,12 @@ public:
         );
     }
 
+    std::string print() {
+        return  "\nx: " + std::to_string(this->x) + 
+                "\ny: " + std::to_string(this->y) +
+                "\nz: " + std::to_string(this->z);
+    }
+
     vec3 operator-(const vec3& other) const
     {
         return vec3(

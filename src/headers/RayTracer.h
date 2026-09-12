@@ -10,6 +10,8 @@
 class RayTracer
 {
 private:
+    int frame = 0;
+
     // Dimensions
     size_t width;
     size_t height;
@@ -42,25 +44,8 @@ public:
 
     vec3 trace_ray(Ray ray);
 
+    vec3 getRayDirection(int x, int y);
+
     // Gets all pixels in byte format
-    std::vector<uint8_t> getPixels() const { 
-        std::vector<uint8_t> bytes;
-
-        for (auto& px : pixels) {
-            bytes.push_back(
-                static_cast<uint8_t>(px.x * 255.0f) // R
-            );
-            bytes.push_back(
-                static_cast<uint8_t>(px.y * 255.0f) // G
-            );
-            bytes.push_back(
-                static_cast<uint8_t>(px.z * 255.0f) // B
-            );
-            bytes.push_back(
-                static_cast<uint8_t>(255.0f)        // A
-            );
-        }
-
-        return bytes;
-    };
+    std::vector<uint8_t> getPixels();
 };

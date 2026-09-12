@@ -26,7 +26,7 @@ SDL_Window* Renderer::createWindow() {
     this->texture = SDL_CreateTexture(
         this->renderer,
         // Pixel format 
-        SDL_PIXELFORMAT_RGBA8888,
+        SDL_PIXELFORMAT_RGBA32,
         // Access
         SDL_TEXTUREACCESS_STREAMING,
         this->width,
@@ -38,18 +38,20 @@ SDL_Window* Renderer::createWindow() {
     return window;
 }
 
-void Renderer::render() {
+void Renderer::render()
+{
+    this->rt.trace();
+    auto pixels = this->rt.getPixels();
+
     // Update internal texture 
     SDL_UpdateTexture(
         this->texture,
-        nullptr, 
-        this->rt.getPixels().data(),
+        nullptr,
+        pixels.data(),
         this->width * 4
     );
 
-    // Present the texture
     SDL_RenderClear(this->renderer);
     SDL_RenderTexture(this->renderer, this->texture, nullptr, nullptr);
     SDL_RenderPresent(this->renderer);
 }
-
