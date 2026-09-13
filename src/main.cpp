@@ -12,6 +12,7 @@
 #define height 400
 
 #define MOUSE_SENSITIVITY 0.01f
+#define CAMERA_SPEED 0.1f
 
 int main()
 {
@@ -23,11 +24,12 @@ int main()
         // Spheres
         Sphere(vec3(5.0f), 1.0f, vec3(0.5f, 0.5f, 1.0f)),
         Sphere(vec3(7.0f, 2.0f, 3.0f), 2.0f, vec3(1.0f, 0.2f, 0.5f)),
+        Sphere(vec3(2.0f), 2.5f, vec3(0.1f, 1.0f, 0.5f)),
 
     });
 
     // Raytracer construction
-    RayTracer rt = RayTracer(width, height, &camera, &scene);
+    RayTracer rt = RayTracer(width, height, &camera, &scene, 1, 5);
 
     // Renderer construction
     Renderer renderer = Renderer(width, height, rt);
@@ -37,7 +39,8 @@ int main()
 
     // Main loop
     bool running = true;
-    mat3 transform_matrix;
+
+    const bool* keystate = SDL_GetKeyboardState(NULL);
 
     while (running) {
         // Event loop
@@ -51,6 +54,23 @@ int main()
                     event.motion.xrel * MOUSE_SENSITIVITY,
                     event.motion.yrel * MOUSE_SENSITIVITY
                 );
+            }
+            // Movement
+            if (keystate[SDL_SCANCODE_W]) {
+                camera.position = camera.position + camera.orientation * CAMERA_SPEED;
+            }
+            if (keystate[SDL_SCANCODE_S]) {
+                camera.position = camera.position - camera.orientation * CAMERA_SPEED;
+            }
+            if (keystate[SDL_SCANCODE_A]) {
+                vec3 right = math::cross(camera.orientation, vec3(0.0f, 1.0f, 0.0f));
+                right.normalize();
+                camera.position = camera.position - right * CAMERA_SPEED;
+            }
+            if (keystate[SDL_SCANCODE_D]) {
+                vec3 right = math::cross(camera.orientation, vec3(0.0f, 1.0f, 0.0f));
+                right.normalize();
+                camera.position = camera.position + right * CAMERA_SPEED;
             }
 
             // Quit event

@@ -12,6 +12,6 @@ public:
     // Consutrctor
     Ray(vec3 origin, vec3 dir) : origin(origin), dir(dir) {};
 
-    bool intersects(Sphere obj);
+    bool intersects(Sphere obj, vec3 &hit_pos);
 
 };

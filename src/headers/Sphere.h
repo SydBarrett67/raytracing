@@ -14,12 +14,13 @@ public:
 
     Sphere(vec3 center, float radius, vec3 color = vec3(1.0f)) : center(center), radius(radius), color(color) {};
 
+    // Get normal vector from collision point (vec3)
     vec3 normal(vec3 collision) const {
 
         vec3 normal = collision - this->center;
         normal.normalize();
 
         return normal;
-    }
+    };
 };
 

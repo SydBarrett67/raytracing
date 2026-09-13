@@ -6,7 +6,7 @@
 
 #include "headers/math.h"
 
-bool Ray::intersects(Sphere sphere)
+bool Ray::intersects(Sphere sphere, vec3 &hit_pos)
 {
     vec3 oc = origin - sphere.center;
 
@@ -16,5 +16,23 @@ bool Ray::intersects(Sphere sphere)
 
     float discriminant = b * b - 4.0f * a * c;
 
-    return discriminant >= 0.0f;
+    // Missed, early return
+    if (discriminant < 0.0f) 
+    {
+        return false;
+    }
+
+    float sqrt_disc = std::sqrt(discriminant);
+    float t = (-b - sqrt_disc) / (2.0f * a);
+
+    if (t < 0.0f) {
+        t = (-b + sqrt_disc) / (2.0f * a);
+    }
+    if (t < 0.0f) {
+        return false;
+    }
+
+    hit_pos = origin + (dir * t);
+
+    return true;
 }

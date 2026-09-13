@@ -17,9 +17,10 @@ void RayTracer::trace() {
             this->pixels.at(i * width + j) = this->trace_ray(
                 // Init ray from camera position and orientation
                 Ray(
-                    this->cam->orientation,
+                    this->cam->position,
                     this->getRayDirection(j, i)
-                )
+                ),
+                0
             );
         }
     }
@@ -27,18 +28,27 @@ void RayTracer::trace() {
     this->frame++;
 }
 
-vec3 RayTracer::trace_ray(Ray ray) {
+vec3 RayTracer::trace_ray(Ray ray, int depth) {
+    if (depth >= this->bounces) return vec3(-1.0f);
 
     vec3 color = vec3(-1.0f);
+    for (int i=0;i<this->rays_per_pixel;i++) {
 
-    // Loop through every object in the scene and check intersection
-    for (auto& obj : this->scene->objects) {
-        for (int i=0;i<this->bounces;i++) {
+        // Loop through every object in the scene and check intersection
+        for (auto& obj : this->scene->objects) {
+            
+            // TODO: support both specular and diffuse
 
             // TODO: calculate new ray direction based on collision normal vec
 
-            if (ray.intersects(obj)) {
-                color = color + obj.color;
+            vec3 hit_pos = vec3(0.0f);
+            if (ray.intersects(obj, hit_pos)) {
+                // New direction, specular reflection
+                vec3 normal = obj.normal(hit_pos);
+                vec3 new_ray_dir = ray.dir - normal * math::dot(ray.dir, normal) * 2;
+
+                color = obj.color;
+                color = color + this->trace_ray(Ray(hit_pos + (normal * 0.01f), new_ray_dir), depth + 1);
             }
         }
     }
