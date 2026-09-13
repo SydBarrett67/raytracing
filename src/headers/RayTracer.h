@@ -23,18 +23,18 @@ private:
     Camera* cam;
 
     // Scene
-    Scene scene;
+    Scene* scene;
 
     // Config 
     size_t rays_per_pixel;
     size_t bounces;
 
 public:
-    RayTracer(size_t width, size_t height, Camera* cam, Scene scene = Scene(), size_t rays_per_pixel=1, size_t bounces=2)
+    RayTracer(size_t width, size_t height, Camera* cam, Scene* scene, size_t rays_per_pixel=1, size_t bounces=2)
     : width(width), height(height),
     cam(cam),
     pixels(width * height, vec3(0.0f)),
-
+    scene(scene),
     rays_per_pixel(rays_per_pixel),
     bounces(bounces)
     {};

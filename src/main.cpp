@@ -8,24 +8,26 @@
 #include "headers/Camera.h"
 #include "headers/math.h"
 
-#define width 480
-#define height 240
+#define width 800
+#define height 400
 
 #define MOUSE_SENSITIVITY 0.01f
 
 int main()
 {
     // Camera construction
-    Camera camera = Camera();
+    Camera camera = Camera(vec3(1.0f));
 
     // Scene construction
     Scene scene = Scene({
         // Spheres
-        Sphere(vec3(2.0f), 1.0f)
+        Sphere(vec3(5.0f), 1.0f, vec3(0.5f, 0.5f, 1.0f)),
+        Sphere(vec3(7.0f, 2.0f, 3.0f), 2.0f, vec3(1.0f, 0.2f, 0.5f)),
+
     });
 
     // Raytracer construction
-    RayTracer rt = RayTracer(width, height, &camera, scene);
+    RayTracer rt = RayTracer(width, height, &camera, &scene);
 
     // Renderer construction
     Renderer renderer = Renderer(width, height, rt);
@@ -43,16 +45,12 @@ int main()
         while (SDL_PollEvent(&event))
         {
             // Mouse movement
-            if (event.type == SDL_EVENT_MOUSE_MOTION) {
-                float dx = event.motion.xrel;
-                float dy = event.motion.yrel;
-
-                transform_matrix = math::getRotationMatrix(
-                    dx * MOUSE_SENSITIVITY,
-                    dy * MOUSE_SENSITIVITY
+            if (event.type == SDL_EVENT_MOUSE_MOTION)
+            {
+                camera.update(
+                    event.motion.xrel * MOUSE_SENSITIVITY,
+                    event.motion.yrel * MOUSE_SENSITIVITY
                 );
-
-                camera.update(transform_matrix);
             }
 
             // Quit event

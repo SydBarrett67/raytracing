@@ -34,6 +34,8 @@ SDL_Window* Renderer::createWindow() {
     );
 
     SDL_SetTextureScaleMode(this->texture, SDL_SCALEMODE_LINEAR);
+
+    SDL_SetWindowRelativeMouseMode(window, true);
     
     return window;
 }

@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "headers/Ray.h"
 #include "headers/Sphere.h"
 #include "headers/vec3.h"
