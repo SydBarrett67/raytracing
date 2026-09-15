@@ -7,6 +7,11 @@
 #include "headers/Renderer.h"
 #include "headers/Camera.h"
 #include "headers/math.h"
+#include "headers/ObjParser.h"
+
+#include "headers/Object.h"
+#include "headers/Mesh.h"
+#include "headers/Sphere.h"
 
 #define width 800
 #define height 400
@@ -16,16 +21,21 @@
 
 int main()
 {
+
+    ObjParser objparser = ObjParser();
+
     // Camera construction
-    Camera camera = Camera(vec3(1.0f));
+    Camera camera = Camera(vec3(0.0f));
 
     // Scene construction
     Scene scene = Scene({
         // Spheres
-        Sphere(vec3(5.0f), 1.0f, vec3(0.5f, 0.5f, 1.0f)),
-        Sphere(vec3(7.0f, 2.0f, 3.0f), 2.0f, vec3(1.0f, 0.2f, 0.5f)),
-        Sphere(vec3(2.0f), 2.5f, vec3(0.1f, 1.0f, 0.5f)),
+        std::make_shared<Sphere>(vec3(5.0f), 1.0f, vec3(0.5f, 0.5f, 1.0f), 1.0f),
+        std::make_shared<Sphere>(vec3(7.0f, 2.0f, 3.0f), 2.0f, vec3(1.0f, 0.2f, 0.5f)),
+        std::make_shared<Sphere>(vec3(2.0f), 2.5f, vec3(0.1f, 1.0f, 0.5f)),
 
+        // Test cube
+        std::make_shared<Mesh>(objparser.parse("tests/cube.obj"))
     });
 
     // Raytracer construction

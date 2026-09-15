@@ -12,7 +12,6 @@ add_executable(raytracing
     src/main.cpp
     src/Renderer.cpp
     src/Camera.cpp
-    src/Ray.cpp
     src/RayTracer.cpp
 )
 

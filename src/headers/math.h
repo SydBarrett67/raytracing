@@ -18,6 +18,7 @@ public:
         );
     }
 
+    /*
     inline static mat3 getRotationMatrix(float yaw, float pitch) {
         float cy = cos(yaw);
         float sy = sin(yaw);
@@ -30,4 +31,5 @@ public:
             -sy, cy * sp, cy * cp
         );
     }
+    */
 };

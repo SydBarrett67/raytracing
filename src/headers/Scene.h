@@ -1,15 +1,14 @@
 #pragma once
 
 #include <vector>
+#include <memory>
+#include "Object.h"
 
-#include "headers/Sphere.h"
-
-class Scene
-{
+class Scene {
 public:
+    std::vector<std::shared_ptr<Object>> objects;
 
-    std::vector<Sphere> objects;
-
-    Scene() : objects() {};
-    Scene(std::vector<Sphere> objects) : objects(objects) {};
+    // Constructor
+    Scene(std::vector<std::shared_ptr<Object>> const& objs) : objects(objs) {}
+    Scene() = default;
 };
